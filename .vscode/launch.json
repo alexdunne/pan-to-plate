@@ -19,6 +19,20 @@
       ],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Attach to Docker",
+      "preLaunchTask": "tsc-watch",
+      "protocol": "inspector",
+      "port": 5858,
+      "restart": true,
+      "localRoot": "${workspaceRoot}",
+      "remoteRoot": "/app",
+      "outFiles": [
+        "${workspaceRoot}/dist/**/*.js"
+      ]
     }
   ]
 }
