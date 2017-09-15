@@ -3,7 +3,7 @@ require("dotenv").config();
 import * as express from "express";
 import { Request, Response } from "express";
 
-import Environment from "./core";
+import Environment from "./core/Environment";
 import { GraphQLRoutes, Routes } from "./routes";
 
 const app = express();
