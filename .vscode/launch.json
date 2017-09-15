@@ -5,18 +5,15 @@
       "type": "node",
       "request": "launch",
       "name": "Launch in Docker",
-      "preLaunchTask": "tsc-watch",
       "protocol": "inspector",
       "runtimeExecutable": "npm",
-      "runtimeArgs": [ "run", "docker-debug" ],
+      "runtimeArgs": ["run", "docker-debug"],
       "port": 5858,
       "restart": true,
       "timeout": 60000,
       "localRoot": "${workspaceRoot}",
       "remoteRoot": "/app",
-      "outFiles": [
-        "${workspaceRoot}/dist/**/*.js"
-      ],
+      "outFiles": ["${workspaceRoot}/dist/**/*.js"],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"
     },
@@ -24,15 +21,12 @@
       "type": "node",
       "request": "attach",
       "name": "Attach to Docker",
-      "preLaunchTask": "tsc-watch",
       "protocol": "inspector",
       "port": 5858,
       "restart": true,
       "localRoot": "${workspaceRoot}",
       "remoteRoot": "/app",
-      "outFiles": [
-        "${workspaceRoot}/dist/**/*.js"
-      ]
+      "outFiles": ["${workspaceRoot}/dist/**/*.js"]
     }
   ]
 }
