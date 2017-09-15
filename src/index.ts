@@ -1,6 +1,8 @@
 import * as express from 'express';
 import { Request, Response } from 'express';
 
+import { GraphQLRoutes, Routes } from './routes';
+
 const app = express();
 
 /**
@@ -9,12 +11,8 @@ const app = express();
 app.set("port", process.env.PORT || 3000);
 
 
-/**
- * Routes
- */
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello world!");
-});
+Routes.map(app);
+GraphQLRoutes.map(app);
 
 app.listen(app.get("port"), () => {
   console.log(("App is running at http://localhost:%d in %s mode"), app.get("port"), app.get("env"));
