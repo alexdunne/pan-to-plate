@@ -1,11 +1,36 @@
-version: "2"
+version: "3"
 
 services:
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql
+    networks:
+      - pantoplate-backend
+    environment:
+      POSTGRES_USER: pantoplate
+      POSTGRES_PASSWORD: pantoplate
+      POSTGRES_DB: pantoplate
   web:
     build: .
     command: npm run debug
-    volumes:
-      - ./dist:/app/dist
     ports:
       - "3000:3000"
       - "5858:5858"
+    volumes:
+      - ./dist:/app/dist
+    networks:
+      - pantoplate-frontend
+      - pantoplate-backend
+    depends_on:
+      - db
+volumes:
+  postgres-data:
+    driver: local
+networks:
+  pantoplate-frontend:
+    driver: bridge
+  pantoplate-backend:
+    driver: bridge
