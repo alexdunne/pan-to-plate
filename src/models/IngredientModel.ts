@@ -9,7 +9,9 @@ export class IngredientModel implements AbstactModel<models.ingredient.JsonAttri
   private deletedAt?: Date;
 
   constructor(attributes?: models.ingredient.Attributes, isDbObject = true) {
-    attributes && isDbObject ? this.mapDatabaseObject(attributes) : this.mapJson(attributes);
+    if (attributes) {
+      isDbObject ? this.mapDatabaseObject(attributes) : this.mapJson(attributes);
+    }
   }
 
   public getId(): string {
@@ -76,12 +78,28 @@ export class IngredientModel implements AbstactModel<models.ingredient.JsonAttri
     return this;
   }
 
+  /**
+   * Used to send data to the user
+   */
   public toJson(): Ingredient {
     return new Ingredient(this);
   }
 
+  /**
+   * Used for creating/updating records
+   */
   public toDatabaseObject(): DBIngredient {
     return new DBIngredient(this);
+  }
+
+  /**
+   * Merges a new model into the existing model
+   * 
+   * @param model The new model - prefer values from this
+   */
+  public merge(model: IngredientModel): IngredientModel {
+    this.setName(model.getName() || this.getName());
+    return this;
   }
 }
 
