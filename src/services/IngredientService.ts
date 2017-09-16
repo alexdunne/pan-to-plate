@@ -2,7 +2,7 @@ import IngredientRepository from "../repositories/IngredientRepository";
 import { IngredientModel } from "../models/IngredientModel";
 import NotFoundException from "../exceptions/NotFoundException";
 
-export default class IngredientService {
+export class IngredientService {
   constructor(private ingredientRepository: IngredientRepository) {}
 
   public async findAll(): Promise<IngredientModel[]> {
