@@ -1,6 +1,6 @@
 import { IngredientService } from "../services";
 
-export default class ServicesContext {
+export class ServicesContext {
   static instance: ServicesContext;
 
   private ingredientService: IngredientService;

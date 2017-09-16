@@ -1,4 +1,4 @@
-import IngredientRepository from "../repositories/IngredientRepository";
+import { IngredientRepository } from "../repositories/IngredientRepository";
 import { IngredientModel } from "../models/IngredientModel";
 import NotFoundException from "../exceptions/NotFoundException";
 

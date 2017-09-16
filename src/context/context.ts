@@ -1,6 +1,6 @@
 import * as Express from "express";
 
-import ServicesContext from "./ServicesContext";
+import { ServicesContext } from "./ServicesContext";
 
 export class Context<A> {
   constructor(private request: Express.Request, private repsonse: Express.Response, private services: ServicesContext) {}

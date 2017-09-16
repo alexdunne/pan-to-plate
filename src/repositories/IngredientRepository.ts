@@ -4,8 +4,8 @@ import { models } from "models";
 import { Ingredients } from "../core/Tables";
 import ListUtils from "../core/ListUtils";
 
-export default class IngredientRepository {
-  private db: Knex;
+export class IngredientRepository {
+  constructor(private db: Knex) {}
 
   public async findAll(): Promise<models.ingredient.DBAttributes[]> {
     return this.db.select().from(Ingredients);
