@@ -22,7 +22,11 @@ export class DBIngredientRepository implements IngredientRepository {
   }
 
   public async create(ingredient: models.ingredient.DBAttributes): Promise<string> {
-    const ids = await this.db.insert(ingredient).into(Ingredients);
+    const ids = await this.db
+      .insert(ingredient)
+      .returning("id")
+      .into(Ingredients);
+
     return ListUtils.head<string>(ids);
   }
 

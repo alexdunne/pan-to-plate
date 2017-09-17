@@ -18,40 +18,45 @@ export class IngredientModel implements AbstactModel<models.ingredient.JsonAttri
     return this.id;
   }
 
-  public setId(value: string) {
+  public setId(value: string): IngredientModel {
     this.id = value;
+    return this;
   }
 
   public getName(): string {
     return this.name;
   }
 
-  public setName(value: string) {
+  public setName(value: string): IngredientModel {
     this.name = value;
+    return this;
   }
 
   public getCreatedAt(): Date {
     return this.createdAt;
   }
 
-  public setCreatedAt(value: Date) {
+  public setCreatedAt(value: Date): IngredientModel {
     this.createdAt = value;
+    return this;
   }
 
   public getUpdatedAt(): Date {
     return this.updatedAt;
   }
 
-  public setUpdatedAt(value: Date) {
+  public setUpdatedAt(value: Date): IngredientModel {
     this.updatedAt = value;
+    return this;
   }
 
   public getDeletedAt(): Date {
     return this.deletedAt;
   }
 
-  public setDeletedAt(value: Date) {
+  public setDeletedAt(value: Date): IngredientModel {
     this.deletedAt = value;
+    return this;
   }
 
   public mapJson(attributes: models.ingredient.JsonAttributes): IngredientModel {
@@ -76,6 +81,10 @@ export class IngredientModel implements AbstactModel<models.ingredient.JsonAttri
     }
 
     return this;
+  }
+
+  public validate(): boolean {
+    return !!this.name;
   }
 
   /**
@@ -122,15 +131,15 @@ export class Ingredient implements models.ingredient.JsonAttributes {
 export class DBIngredient implements models.ingredient.DBAttributes {
   public id?: string;
   public name: string;
-  public createdAt?: Date;
-  public updatedAt?: Date;
-  public deletedAt?: Date;
+  public created_at?: Date;
+  public updated_at?: Date;
+  public deleted_at?: Date;
 
   constructor(model: IngredientModel) {
     this.id = model.getId();
     this.name = model.getName();
-    this.createdAt = model.getCreatedAt();
-    this.updatedAt = model.getUpdatedAt();
-    this.deletedAt = model.getDeletedAt();
+    this.created_at = model.getCreatedAt();
+    this.updated_at = model.getUpdatedAt();
+    this.deleted_at = model.getDeletedAt();
   }
 }
