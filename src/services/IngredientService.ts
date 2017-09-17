@@ -1,9 +1,9 @@
-import { IngredientRepository } from "../repositories/IngredientRepository";
+import { DBIngredientRepository } from "../repositories/Ingredient";
 import { IngredientModel } from "../models/IngredientModel";
 import NotFoundException from "../exceptions/NotFoundException";
 
 export class IngredientService {
-  constructor(private ingredientRepository: IngredientRepository) {}
+  constructor(private ingredientRepository: DBIngredientRepository) {}
 
   public async findAll(): Promise<IngredientModel[]> {
     const results = await this.ingredientRepository.findAll();

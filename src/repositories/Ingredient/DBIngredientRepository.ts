@@ -1,10 +1,11 @@
 import * as Knex from "knex";
 
 import { models } from "models";
-import { Ingredients } from "../core/Tables";
-import ListUtils from "../core/ListUtils";
+import { IngredientRepository } from "./IngredientRepository";
+import { Ingredients } from "../../core/Tables";
+import ListUtils from "../../core/ListUtils";
 
-export class IngredientRepository {
+export class DBIngredientRepository implements IngredientRepository {
   constructor(private db: Knex) {}
 
   public async findAll(): Promise<models.ingredient.DBAttributes[]> {
@@ -26,15 +27,17 @@ export class IngredientRepository {
   }
 
   public async update(ingredient: models.ingredient.DBAttributes): Promise<void> {
-    await this.db
+    return this.db
       .update(ingredient)
       .into(Ingredients)
       .where("id", ingredient.id);
   }
 
   public async delete(id: string): Promise<void> {
-    await this.db
-      .delete()
+    return this.db
+      .update({
+        deleted_at: true
+      })
       .from(Ingredients)
       .where("id", id);
   }

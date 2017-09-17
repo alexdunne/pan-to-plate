@@ -9,7 +9,7 @@ exports.up = function(knex: Knex): Promise<any> {
       // prettier-ignore
       table.uuid("id").notNullable().primary().defaultTo(knex.raw('uuid_generate_v4()'))
       table.string("name").notNullable();
-      table.timestamps();
+      table.timestamps(false, true);
       table.dateTime("deleted_at");
     })
   ]);

@@ -13,7 +13,7 @@ export class ServicesContext {
     return ServicesContext.instance;
   }
 
-  public getIngredientService(): IngredientService {
+  public get IngredientService(): IngredientService {
     return this.ingredientService;
   }
 

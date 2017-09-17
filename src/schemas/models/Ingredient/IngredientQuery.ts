@@ -14,7 +14,7 @@ export default {
       }
     },
     async resolve(source: any, { id }: { id: string }, context: Context) {
-      return context.services.getIngredientService().findById(id);
+      return context.services.IngredientService.findById(id);
     }
   }
 };
