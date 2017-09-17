@@ -6,17 +6,17 @@ declare module "models" {
       interface JsonAttributes {
         id?: string;
         name?: string;
-        createdAt?: Date;
-        updatedAt?: Date;
-        deletedAt?: Date;
+        created_at?: Date;
+        updated_at?: Date;
+        deleted_at?: Date;
       }
 
       interface DBAttributes {
         id?: string;
         name?: string;
-        createdAt?: Date;
-        updatedAt?: Date;
-        deletedAt?: Date;
+        created_at?: Date;
+        updated_at?: Date;
+        deleted_at?: Date;
       }
     }
   }

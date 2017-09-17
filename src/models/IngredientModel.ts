@@ -58,9 +58,9 @@ export class IngredientModel implements AbstactModel<models.ingredient.JsonAttri
     if (attributes !== undefined) {
       this.setId(attributes.id);
       this.setName(attributes.name);
-      this.setCreatedAt(attributes.createdAt);
-      this.setUpdatedAt(attributes.updatedAt);
-      this.setDeletedAt(attributes.deletedAt);
+      this.setCreatedAt(attributes.created_at);
+      this.setUpdatedAt(attributes.updated_at);
+      this.setDeletedAt(attributes.deleted_at);
     }
 
     return this;
@@ -70,9 +70,9 @@ export class IngredientModel implements AbstactModel<models.ingredient.JsonAttri
     if (attributes !== undefined) {
       this.setId(attributes.id);
       this.setName(attributes.name);
-      this.setCreatedAt(attributes.createdAt);
-      this.setUpdatedAt(attributes.updatedAt);
-      this.setDeletedAt(attributes.deletedAt);
+      this.setCreatedAt(attributes.created_at);
+      this.setUpdatedAt(attributes.updated_at);
+      this.setDeletedAt(attributes.deleted_at);
     }
 
     return this;

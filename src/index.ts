@@ -12,11 +12,7 @@ Routes.map(app);
 GraphQLRoutes.map(app);
 
 app.listen(Environment.getPort(), () => {
-  console.log(
-    "App is running at http://localhost:%d in %s mode",
-    Environment.getPort(),
-    Environment.getEnvironment()
-  );
+  console.log("App is running at http://localhost:%d in %s mode", Environment.getPort(), Environment.getEnvironment());
 
   console.log("Press CTRL-C to stop\n");
 });
