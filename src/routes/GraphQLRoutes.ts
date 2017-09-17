@@ -4,8 +4,10 @@ import * as GraphQLHTTP from "express-graphql";
 import Environment from "../core/Environment";
 import Database from "../core/Database";
 import { Context, ServicesContext } from "../context";
+
 import { IngredientRepository } from "../repositories";
 import { IngredientService } from "../services";
+import Schema from "../schemas";
 
 export class GraphQLRoutes {
   static map(app: Application): void {
@@ -13,7 +15,7 @@ export class GraphQLRoutes {
 
     app.use("/graphql", (req: Request, res: Response) => {
       GraphQLHTTP({
-        schema: {},
+        schema: Schema,
         context: new Context(req, res, ServicesContext.getInstance()),
         graphiql: Environment.isGraphiqlActive()
       })(req, res);

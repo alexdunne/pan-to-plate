@@ -8,10 +8,11 @@
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
-      "*": ["node_modules/*", "src/types/*"]
+      "*": ["node_modules/*", "src/types/*", "typings/*"]
     },
     "typeRoots": ["typings"],
-    "types": ["models"]
+    "types": ["models"],
+    "lib": ["es6", "esnext"]
   },
   "include": ["src/**/*"]
 }
