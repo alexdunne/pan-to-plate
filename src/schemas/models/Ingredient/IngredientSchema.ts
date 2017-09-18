@@ -15,11 +15,11 @@ export const Ingredient = new GraphQLObjectType({
       description: "The name of the ingredient"
     },
     createdAt: {
-      type: GraphQLISO8601Type,
+      type: new GraphQLNonNull(GraphQLISO8601Type),
       description: "The datetime the ingredient was first created at"
     },
     updatedAt: {
-      type: GraphQLISO8601Type,
+      type: new GraphQLNonNull(GraphQLISO8601Type),
       description: "The datetime the ingredient was last updated at"
     },
     deletedAt: {

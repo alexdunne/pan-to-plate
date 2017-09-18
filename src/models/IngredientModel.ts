@@ -1,7 +1,7 @@
 import { models } from "models";
-import AbstactModel from "./AbstractModel";
+import { Model } from "./Model";
 
-export class IngredientModel implements AbstactModel<models.ingredient.JsonAttributes, models.ingredient.DBAttributes> {
+export class IngredientModel implements Model<models.ingredient.JsonAttributes, models.ingredient.DBAttributes> {
   private id?: string;
   private name?: string;
   private createdAt?: Date;

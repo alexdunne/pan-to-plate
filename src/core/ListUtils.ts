@@ -1,13 +1,11 @@
-export default class ListUtils {
-  static hasResults<T>(list: T[]): boolean {
+export default {
+  hasResults<T>(list: T[]): boolean {
     return typeof list === "object" && !!list && list.length ? list.length > 0 : false;
+  },
+  isEmpty<T>(list: T[]): boolean {
+    return !this.hasResults(list);
+  },
+  head<T>(list: T[]): T {
+    return this.hasResults(list) ? list[0] : null;
   }
-
-  static isEmpty<T>(list: T[]): boolean {
-    return !ListUtils.hasResults(list);
-  }
-
-  static head<T>(list: T[]): T {
-    return ListUtils.hasResults(list) ? list[0] : null;
-  }
-}
+};
