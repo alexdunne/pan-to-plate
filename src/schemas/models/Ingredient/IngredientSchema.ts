@@ -29,6 +29,21 @@ export const Ingredient = new GraphQLObjectType({
   })
 });
 
+export const DeletedIngredient = new GraphQLObjectType({
+  name: "DeletedIngredient",
+  description: "An individual ingredient",
+  fields: () => ({
+    id: {
+      type: new GraphQLNonNull(GraphQLID),
+      description: "The unique ingredient Id"
+    },
+    deletedAt: {
+      type: GraphQLISO8601Type,
+      description: "The datetime the ingredient was deleted at"
+    }
+  })
+});
+
 export const IngredientInput = new GraphQLInputObjectType({
   name: "IngredientInput",
   description: "An input schema for an ingredient",

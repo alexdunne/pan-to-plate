@@ -9,14 +9,18 @@ export class DBIngredientRepository implements IngredientRepository {
   constructor(private db: Knex) {}
 
   public async findAll(): Promise<models.ingredient.DBAttributes[]> {
-    return this.db.select().from(Ingredients);
+    return this.db
+      .select()
+      .from(Ingredients)
+      .where("deleted_at", null);
   }
 
   public async findById(id: string): Promise<models.ingredient.DBAttributes> {
     const results = await this.db
       .select()
       .from(Ingredients)
-      .where("id", id);
+      .where("id", id)
+      .andWhere("deleted_at", null);
 
     return ListUtils.head(results);
   }
@@ -40,7 +44,7 @@ export class DBIngredientRepository implements IngredientRepository {
   public async delete(id: string): Promise<void> {
     return this.db
       .update({
-        deleted_at: true
+        deleted_at: new Date()
       })
       .from(Ingredients)
       .where("id", id);

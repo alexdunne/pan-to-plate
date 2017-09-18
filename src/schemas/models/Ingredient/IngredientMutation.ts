@@ -1,19 +1,23 @@
 import { GraphQLNonNull, GraphQLID } from "graphql";
 
-import { Ingredient, IngredientInput } from "./IngredientSchema";
+import { Ingredient, DeletedIngredient, IngredientInput } from "./IngredientSchema";
 import { IngredientService } from "../../../services";
 import { Context } from "../../../context";
 import { IngredientModel } from "../../../models/IngredientModel";
 
-export interface ICreateIngredientMutationArguments {
+interface ICreateIngredientMutationArguments {
   name: string;
 }
 
-export interface IUpdateIngredientMutationArguments {
+interface IUpdateIngredientMutationArguments {
   id: string;
   updatedIngredient: {
     name: string;
   };
+}
+
+interface IDeleteIngredientMutationArguments {
+  id: string;
 }
 
 export default {
@@ -52,7 +56,28 @@ export default {
     },
     async resolve(source: any, { id, updatedIngredient }: IUpdateIngredientMutationArguments, context: Context) {
       const model = new IngredientModel().setId(id).setName(updatedIngredient.name);
+
+      if (!model.validate()) {
+        throw new Error("Invalid ingredient");
+      }
+
       const ingredient = await context.services.IngredientService.update(model);
+      return ingredient.toJson();
+    }
+  },
+  deleteIngredient: {
+    type: DeletedIngredient,
+    description: "Delete an existing ingredient",
+    args: {
+      id: {
+        type: new GraphQLNonNull(GraphQLID),
+        description: "The id of the ingredient to delete"
+      }
+    },
+    async resolve(source: any, { id }: IDeleteIngredientMutationArguments, context: Context) {
+      await context.services.IngredientService.delete(id);
+
+      const ingredient = await context.services.IngredientService.findById(id);
       return ingredient.toJson();
     }
   }
