@@ -1,4 +1,4 @@
-import { GraphQLNonNull } from "graphql";
+import { GraphQLNonNull, GraphQLID } from "graphql";
 
 import { Ingredient, IngredientInput } from "./IngredientSchema";
 import { IngredientService } from "../../../services";
@@ -7,6 +7,13 @@ import { IngredientModel } from "../../../models/IngredientModel";
 
 export interface ICreateIngredientMutationArguments {
   name: string;
+}
+
+export interface IUpdateIngredientMutationArguments {
+  id: string;
+  updatedIngredient: {
+    name: string;
+  };
 }
 
 export default {
@@ -27,6 +34,25 @@ export default {
       }
 
       const ingredient = await context.services.IngredientService.create(model);
+      return ingredient.toJson();
+    }
+  },
+  updateIngredient: {
+    type: Ingredient,
+    description: "Update an existing ingredient",
+    args: {
+      id: {
+        type: new GraphQLNonNull(GraphQLID),
+        description: "The id of the ingredient to update"
+      },
+      updatedIngredient: {
+        type: new GraphQLNonNull(IngredientInput),
+        description: "The updated ingredients field"
+      }
+    },
+    async resolve(source: any, { id, updatedIngredient }: IUpdateIngredientMutationArguments, context: Context) {
+      const model = new IngredientModel().setId(id).setName(updatedIngredient.name);
+      const ingredient = await context.services.IngredientService.update(model);
       return ingredient.toJson();
     }
   }

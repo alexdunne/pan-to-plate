@@ -27,7 +27,10 @@ export class IngredientService {
 
   public async update(updatedIngredientModel: IngredientModel): Promise<IngredientModel> {
     const ingredientModel = await this.findById(updatedIngredientModel.getId());
+    updatedIngredientModel.setUpdatedAt(new Date());
+
     ingredientModel.merge(updatedIngredientModel);
+
     await this.ingredientRepository.update(ingredientModel.toDatabaseObject());
     return this.findById(ingredientModel.getId());
   }

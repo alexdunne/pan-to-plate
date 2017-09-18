@@ -108,6 +108,9 @@ export class IngredientModel implements Model<models.ingredient.JsonAttributes, 
    */
   public merge(model: IngredientModel): IngredientModel {
     this.setName(model.getName() || this.getName());
+    this.setCreatedAt(model.getCreatedAt() || this.getCreatedAt());
+    this.setUpdatedAt(model.getUpdatedAt() || this.getUpdatedAt());
+    this.setDeletedAt(model.getDeletedAt() || this.getDeletedAt());
     return this;
   }
 }
