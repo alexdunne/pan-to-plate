@@ -2,7 +2,7 @@ import * as Knex from "knex";
 
 import { models } from "models";
 import { IngredientRepository } from "./IngredientRepository";
-import { Ingredients } from "../../core/Tables";
+import { Ingredients, Recipes, RecipesIngredients } from "../../core/Tables";
 import ListUtils from "../../core/ListUtils";
 
 export class DBIngredientRepository implements IngredientRepository {
@@ -23,6 +23,15 @@ export class DBIngredientRepository implements IngredientRepository {
       .andWhere("deleted_at", null);
 
     return ListUtils.head(results);
+  }
+
+  public async findByRecipe(recipeId: string): Promise<models.ingredient.DBAttributes[]> {
+    return this.db
+      .select(`${Ingredients}.*`)
+      .from(Ingredients)
+      .innerJoin(RecipesIngredients, `${Ingredients}.id`, `${RecipesIngredients}.ingredients_id`)
+      .innerJoin(Recipes, `${Recipes}.id`, `${RecipesIngredients}.recipes_id`)
+      .where(`${Recipes}.id`, recipeId);
   }
 
   public async create(ingredient: models.ingredient.DBAttributes): Promise<string> {

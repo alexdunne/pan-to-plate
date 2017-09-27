@@ -19,5 +19,27 @@ declare module "models" {
         deleted_at?: Date;
       }
     }
+
+    namespace recipe {
+      type Attributes = JsonAttributes | DBAttributes;
+
+      interface JsonAttributes {
+        id?: string;
+        name?: string;
+        description?: string;
+        created_at?: Date;
+        updated_at?: Date;
+        deleted_at?: Date;
+      }
+
+      interface DBAttributes {
+        id?: string;
+        name?: string;
+        description?: string;
+        created_at?: Date;
+        updated_at?: Date;
+        deleted_at?: Date;
+      }
+    }
   }
 }

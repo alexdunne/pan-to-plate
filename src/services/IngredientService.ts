@@ -1,13 +1,13 @@
-import { DBIngredientRepository } from "../repositories/Ingredient";
+import { IngredientRepository } from "../repositories/Ingredient";
 import { IngredientModel } from "../models/IngredientModel";
 import NotFoundException from "../exceptions/NotFoundException";
 
 export class IngredientService {
-  constructor(private ingredientRepository: DBIngredientRepository) {}
+  constructor(private ingredientRepository: IngredientRepository) {}
 
   public async findAll(): Promise<IngredientModel[]> {
     const results = await this.ingredientRepository.findAll();
-    return results.map(result => new IngredientModel(result));
+    return results.map(result => new IngredientModel(result, true));
   }
 
   public async findById(id: string): Promise<IngredientModel> {
@@ -17,7 +17,12 @@ export class IngredientService {
       throw new NotFoundException(id);
     }
 
-    return new IngredientModel(result);
+    return new IngredientModel(result, true);
+  }
+
+  public async findByRecipe(recipeId: string): Promise<IngredientModel[]> {
+    const results = await this.ingredientRepository.findByRecipe(recipeId);
+    return results.map(result => new IngredientModel(result, true));
   }
 
   public async create(ingredientModel: IngredientModel): Promise<IngredientModel> {
