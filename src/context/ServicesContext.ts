@@ -1,9 +1,11 @@
 import { IngredientService } from "../services";
+import { RecipeService } from "../services";
 
 export class ServicesContext {
   static instance: ServicesContext;
 
   private ingredientService: IngredientService;
+  private recipeService: RecipeService;
 
   static getInstance(): ServicesContext {
     if (!ServicesContext.instance) {
@@ -19,6 +21,15 @@ export class ServicesContext {
 
   public setIngredientService(ingredientService: IngredientService): ServicesContext {
     this.ingredientService = ingredientService;
+    return this;
+  }
+
+  public get RecipeService(): RecipeService {
+    return this.recipeService;
+  }
+
+  public setRecipeService(recipeService: RecipeService): ServicesContext {
+    this.recipeService = recipeService;
     return this;
   }
 }

@@ -1,25 +1,25 @@
 import { GraphQLNonNull, GraphQLID, GraphQLList } from "graphql";
 
-import { Ingredient } from "./IngredientSchema";
+import { Recipe } from "./RecipeSchema";
 import { Context } from "../../../context";
 
 export default {
-  ingredients: {
-    type: new GraphQLList(Ingredient),
+  recipes: {
+    type: new GraphQLList(Recipe),
     async resolve(source: any, args: any, context: Context) {
-      return context.services.IngredientService.findAll();
+      return context.services.RecipeService.findAll();
     }
   },
-  ingredient: {
-    type: Ingredient,
+  recipe: {
+    type: Recipe,
     args: {
       id: {
         type: new GraphQLNonNull(GraphQLID),
-        description: "The id of the ingredient"
+        description: "The id of the recipe"
       }
     },
     async resolve(source: any, { id }: { id: string }, context: Context) {
-      return context.services.IngredientService.findById(id);
+      return context.services.RecipeService.findById(id);
     }
   }
 };
