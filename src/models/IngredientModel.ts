@@ -10,7 +10,7 @@ export class IngredientModel implements Model<models.ingredient.JsonAttributes, 
 
   constructor(attributes?: models.ingredient.Attributes, isDbObject = true) {
     if (attributes) {
-      isDbObject ? this.mapDatabaseObject(attributes) : this.mapJson(attributes);
+      isDbObject ? this.fromDatabaseObject(attributes) : this.fromJson(attributes);
     }
   }
 
@@ -59,7 +59,7 @@ export class IngredientModel implements Model<models.ingredient.JsonAttributes, 
     return this;
   }
 
-  public mapJson(attributes: models.ingredient.JsonAttributes): IngredientModel {
+  public fromJson(attributes: models.ingredient.JsonAttributes): IngredientModel {
     if (attributes !== undefined) {
       this.setId(attributes.id);
       this.setName(attributes.name);
@@ -71,7 +71,7 @@ export class IngredientModel implements Model<models.ingredient.JsonAttributes, 
     return this;
   }
 
-  public mapDatabaseObject(attributes: models.ingredient.DBAttributes): IngredientModel {
+  public fromDatabaseObject(attributes: models.ingredient.DBAttributes): IngredientModel {
     if (attributes !== undefined) {
       this.setId(attributes.id);
       this.setName(attributes.name);
