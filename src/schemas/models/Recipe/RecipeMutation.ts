@@ -17,6 +17,20 @@ interface ICreateRecipeMutationArguments {
   ];
 }
 
+interface IUpdateRecipeMutationArguments {
+  id: string;
+  updatedRecipe: {
+    name: string;
+    description: string;
+    ingredients: [
+      {
+        id: string;
+        quantity: number;
+      }
+    ];
+  };
+}
+
 export default {
   createRecipe: {
     type: Recipe,
@@ -38,6 +52,47 @@ export default {
 
       await Promise.all(
         newRecipe.ingredients.map(async (recipeIngredient): Promise<void> => {
+          const model = new RecipeIngredientModel()
+            .setRecipeId(recipe.getId())
+            .setIngredientId(recipeIngredient.id)
+            .setQuantity(recipeIngredient.quantity);
+
+          await context.services.RecipeIngredientService.create(model);
+        })
+      );
+
+      return recipe.toJson();
+    }
+  },
+  updateRecipe: {
+    type: Recipe,
+    description: "Update an existing recipe",
+    args: {
+      id: {
+        type: new GraphQLNonNull(GraphQLID),
+        description: "The id of the recipe to update"
+      },
+      updatedRecipe: {
+        type: new GraphQLNonNull(RecipeInput),
+        description: "The updated recipes fields"
+      }
+    },
+    async resolve(source: any, { id, updatedRecipe }: IUpdateRecipeMutationArguments, context: Context) {
+      const recipeModel = new RecipeModel()
+        .setId(id)
+        .setName(updatedRecipe.name)
+        .setDescription(updatedRecipe.description);
+
+      if (!recipeModel.validate()) {
+        throw new Error("Invalid recipe");
+      }
+
+      const recipe = await context.services.RecipeService.update(recipeModel);
+
+      await context.services.RecipeIngredientService.deleteForRecipe(recipe.getId());
+
+      await Promise.all(
+        updatedRecipe.ingredients.map(async (recipeIngredient): Promise<void> => {
           const model = new RecipeIngredientModel()
             .setRecipeId(recipe.getId())
             .setIngredientId(recipeIngredient.id)

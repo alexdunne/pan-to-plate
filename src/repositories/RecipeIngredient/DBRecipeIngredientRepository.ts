@@ -40,4 +40,11 @@ export class DBRecipeIngredientRepository implements RecipeIngredientRepository 
       .where("id", id)
       .delete();
   }
+
+  public async deleteForRecipe(recipeId: string): Promise<void> {
+    return this.db
+      .from(RecipesIngredients)
+      .where("recipes_id", recipeId)
+      .delete();
+  }
 }

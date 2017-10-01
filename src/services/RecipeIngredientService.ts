@@ -28,4 +28,8 @@ export class RecipeIngredientService {
   public async delete(id: string): Promise<void> {
     return this.recipeIngredientRepository.delete(id);
   }
+
+  public async deleteForRecipe(recipeId: string): Promise<void> {
+    return this.recipeIngredientRepository.deleteForRecipe(recipeId);
+  }
 }

@@ -5,4 +5,5 @@ export interface RecipeIngredientRepository {
   findByRecipe(recipeId: string): Promise<models.recipeIngredient.DBAttributes[]>;
   create(recipe: models.recipeIngredient.DBAttributes): Promise<string>;
   delete(id: string): Promise<void>;
+  deleteForRecipe(recipeId: string): Promise<void>;
 }
