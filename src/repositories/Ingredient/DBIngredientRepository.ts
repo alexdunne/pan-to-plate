@@ -25,15 +25,6 @@ export class DBIngredientRepository implements IngredientRepository {
     return ListUtils.head(results);
   }
 
-  public async findByRecipe(recipeId: string): Promise<models.ingredient.DBAttributes[]> {
-    return this.db
-      .select(`${Ingredients}.*`)
-      .from(Ingredients)
-      .innerJoin(RecipesIngredients, `${Ingredients}.id`, `${RecipesIngredients}.ingredients_id`)
-      .innerJoin(Recipes, `${Recipes}.id`, `${RecipesIngredients}.recipes_id`)
-      .where(`${Recipes}.id`, recipeId);
-  }
-
   public async create(ingredient: models.ingredient.DBAttributes): Promise<string> {
     const ids = await this.db
       .insert(ingredient)

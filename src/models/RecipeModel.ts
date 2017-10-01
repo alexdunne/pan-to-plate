@@ -1,8 +1,7 @@
 import { models } from "models";
 import { Model } from "./Model";
-import { IngredientModel } from "./IngredientModel";
 
-export class RecipeModel {
+export class RecipeModel implements Model<models.recipe.JsonAttributes, models.recipe.DBAttributes> {
   private id?: string;
   private name?: string;
   private description?: string;
@@ -70,6 +69,38 @@ export class RecipeModel {
     return this;
   }
 
+  public validate() {
+    return !!this.name && !!this.description;
+  }
+
+  /**
+   * Merges a new model into the existing model
+   * 
+   * @param model The new model - prefer values from this
+   */
+  public merge(model: RecipeModel): RecipeModel {
+    this.setName(model.getName() || this.getName());
+    this.setDescription(model.getDescription() || this.getDescription());
+    this.setCreatedAt(model.getCreatedAt() || this.getCreatedAt());
+    this.setUpdatedAt(model.getUpdatedAt() || this.getUpdatedAt());
+    this.setDeletedAt(model.getDeletedAt() || this.getDeletedAt());
+    return this;
+  }
+
+  /**
+   * Used to send data to the user
+   */
+  public toJson(): Recipe {
+    return new Recipe(this);
+  }
+
+  /**
+   * Used for creating/updating records
+   */
+  public toDatabaseObject(): DBRecipe {
+    return new DBRecipe(this);
+  }
+
   public fromJson(attributes: models.recipe.JsonAttributes): RecipeModel {
     if (attributes !== undefined) {
       this.setId(attributes.id);
@@ -94,5 +125,41 @@ export class RecipeModel {
     }
 
     return this;
+  }
+}
+
+export class Recipe implements models.recipe.JsonAttributes {
+  public id?: string;
+  public name?: string;
+  public description?: string;
+  public createdAt?: Date;
+  public updatedAt?: Date;
+  public deletedAt?: Date;
+
+  constructor(model: RecipeModel) {
+    this.id = model.getId();
+    this.name = model.getName();
+    this.description = model.getDescription();
+    this.createdAt = model.getCreatedAt();
+    this.updatedAt = model.getUpdatedAt();
+    this.deletedAt = model.getDeletedAt();
+  }
+}
+
+export class DBRecipe implements models.recipe.DBAttributes {
+  public id?: string;
+  public name?: string;
+  public description?: string;
+  public created_at?: Date;
+  public updated_at?: Date;
+  public deleted_at?: Date;
+
+  constructor(model: RecipeModel) {
+    this.id = model.getId();
+    this.name = model.getName();
+    this.description = model.getDescription();
+    this.created_at = model.getCreatedAt();
+    this.updated_at = model.getUpdatedAt();
+    this.deleted_at = model.getDeletedAt();
   }
 }

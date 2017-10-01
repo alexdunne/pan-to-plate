@@ -24,4 +24,29 @@ export class DBRecipeRepository implements RecipeRepository {
 
     return ListUtils.head(results);
   }
+
+  public async create(recipe: models.recipe.DBAttributes): Promise<string> {
+    const ids = await this.db
+      .insert(recipe)
+      .returning("id")
+      .into(Recipes);
+
+    return ListUtils.head<string>(ids);
+  }
+
+  public async update(recipe: models.recipe.DBAttributes): Promise<void> {
+    return this.db
+      .update(recipe)
+      .into(Recipes)
+      .where("id", recipe.id);
+  }
+
+  public async delete(id: string): Promise<void> {
+    return this.db
+      .update({
+        deleted_at: new Date()
+      })
+      .from(Recipes)
+      .where("id", id);
+  }
 }

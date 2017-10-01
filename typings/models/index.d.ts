@@ -41,5 +41,23 @@ declare module "models" {
         deleted_at?: Date;
       }
     }
+
+    namespace recipeIngredient {
+      type Attributes = JsonAttributes | DBAttributes;
+
+      interface JsonAttributes {
+        id?: string;
+        recipeId?: string;
+        ingredientId?: string;
+        quantity?: number;
+      }
+
+      interface DBAttributes {
+        id?: string;
+        recipes_id?: string;
+        ingredients_id?: string;
+        quantity?: number;
+      }
+    }
   }
 }

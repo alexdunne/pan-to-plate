@@ -1,11 +1,11 @@
-import { IngredientService } from "../services";
-import { RecipeService } from "../services";
+import { IngredientService, RecipeService, RecipeIngredientService } from "../services";
 
 export class ServicesContext {
   static instance: ServicesContext;
 
   private ingredientService: IngredientService;
   private recipeService: RecipeService;
+  private recipeIngredientService: RecipeIngredientService;
 
   static getInstance(): ServicesContext {
     if (!ServicesContext.instance) {
@@ -30,6 +30,15 @@ export class ServicesContext {
 
   public setRecipeService(recipeService: RecipeService): ServicesContext {
     this.recipeService = recipeService;
+    return this;
+  }
+
+  public get RecipeIngredientService(): RecipeIngredientService {
+    return this.recipeIngredientService;
+  }
+
+  public setRecipeIngredientService(recipeIngredientService: RecipeIngredientService): ServicesContext {
+    this.recipeIngredientService = recipeIngredientService;
     return this;
   }
 }

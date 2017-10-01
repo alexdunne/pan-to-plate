@@ -19,4 +19,23 @@ export class RecipeService {
 
     return new RecipeModel(result, true);
   }
+
+  public async create(model: RecipeModel): Promise<RecipeModel> {
+    const id = await this.recipeRepository.create(model.toDatabaseObject());
+    return this.findById(id);
+  }
+
+  public async update(updatedRecipeModel: RecipeModel): Promise<RecipeModel> {
+    const model = await this.findById(updatedRecipeModel.getId());
+    updatedRecipeModel.setUpdatedAt(new Date());
+
+    model.merge(updatedRecipeModel);
+
+    await this.recipeRepository.update(model.toDatabaseObject());
+    return this.findById(model.getId());
+  }
+
+  public async delete(id: string): Promise<void> {
+    return this.recipeRepository.delete(id);
+  }
 }
