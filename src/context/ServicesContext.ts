@@ -1,4 +1,4 @@
-import { IngredientService, RecipeService, RecipeIngredientService } from "../services";
+import { IngredientService, RecipeService, RecipeIngredientService, RecipeStepService } from "../services";
 
 export class ServicesContext {
   static instance: ServicesContext;
@@ -6,6 +6,7 @@ export class ServicesContext {
   private ingredientService: IngredientService;
   private recipeService: RecipeService;
   private recipeIngredientService: RecipeIngredientService;
+  private recipeStepService: RecipeStepService;
 
   static getInstance(): ServicesContext {
     if (!ServicesContext.instance) {
@@ -39,6 +40,15 @@ export class ServicesContext {
 
   public setRecipeIngredientService(recipeIngredientService: RecipeIngredientService): ServicesContext {
     this.recipeIngredientService = recipeIngredientService;
+    return this;
+  }
+
+  public get RecipeStepService(): RecipeStepService {
+    return this.recipeStepService;
+  }
+
+  public setRecipeStepService(recipeStepService: RecipeStepService): ServicesContext {
+    this.recipeStepService = recipeStepService;
     return this;
   }
 }

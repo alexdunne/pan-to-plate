@@ -20,11 +20,6 @@ export class IngredientService {
     return new IngredientModel(result, true);
   }
 
-  public async findByRecipe(recipeId: string): Promise<IngredientModel[]> {
-    const results = await this.ingredientRepository.findByRecipe(recipeId);
-    return results.map(result => new IngredientModel(result, true));
-  }
-
   public async create(ingredientModel: IngredientModel): Promise<IngredientModel> {
     const id = await this.ingredientRepository.create(ingredientModel.toDatabaseObject());
     return this.findById(id);

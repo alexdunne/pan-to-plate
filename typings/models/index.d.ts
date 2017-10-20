@@ -59,5 +59,29 @@ declare module "models" {
         quantity?: number;
       }
     }
+
+    namespace recipeStep {
+      type Attributes = JsonAttributes | DBAttributes;
+
+      interface JsonAttributes {
+        id?: string;
+        recipeId?: string;
+        description?: string;
+        orderNumber?: number;
+        created_at?: Date;
+        updated_at?: Date;
+        deleted_at?: Date;
+      }
+
+      interface DBAttributes {
+        id?: string;
+        recipes_id?: string;
+        description?: string;
+        order_number?: number;
+        created_at?: Date;
+        updated_at?: Date;
+        deleted_at?: Date;
+      }
+    }
   }
 }

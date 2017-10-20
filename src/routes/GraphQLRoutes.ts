@@ -8,7 +8,8 @@ import { Context, ServicesContext } from "../context";
 import { DBIngredientRepository } from "../repositories/Ingredient";
 import { DBRecipeRepository } from "../repositories/Recipe";
 import { DBRecipeIngredientRepository } from "../repositories/RecipeIngredient";
-import { IngredientService, RecipeService, RecipeIngredientService } from "../services";
+import { DBRecipeStepRepository } from "../repositories/RecipeStep";
+import { IngredientService, RecipeService, RecipeIngredientService, RecipeStepService } from "../services";
 import Schema from "../schemas";
 
 export class GraphQLRoutes {
@@ -31,6 +32,7 @@ export class GraphQLRoutes {
     ServicesContext.getInstance()
       .setIngredientService(new IngredientService(new DBIngredientRepository(Database)))
       .setRecipeService(new RecipeService(new DBRecipeRepository(Database)))
-      .setRecipeIngredientService(new RecipeIngredientService(new DBRecipeIngredientRepository(Database)));
+      .setRecipeIngredientService(new RecipeIngredientService(new DBRecipeIngredientRepository(Database)))
+      .setRecipeStepService(new RecipeStepService(new DBRecipeStepRepository(Database)));
   }
 }

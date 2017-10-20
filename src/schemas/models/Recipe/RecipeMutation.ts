@@ -5,6 +5,7 @@ import { Ingredient } from "../Ingredient/IngredientSchema";
 import { Context } from "../../../context";
 import { RecipeModel } from "../../../models/RecipeModel";
 import { RecipeIngredientModel } from "../../../models/RecipeIngredientModel";
+import { RecipeStepModel } from "../../../models/RecipeStepModel";
 
 interface ICreateRecipeMutationArguments {
   name: string;
@@ -15,6 +16,7 @@ interface ICreateRecipeMutationArguments {
       quantity: number;
     }
   ];
+  steps: [ICreateStepArgument];
 }
 
 interface IUpdateRecipeMutationArguments {
@@ -28,7 +30,19 @@ interface IUpdateRecipeMutationArguments {
         quantity: number;
       }
     ];
+    steps: [IUpdateStepArgument];
   };
+}
+
+interface ICreateStepArgument {
+  description: string;
+  orderNumber: number;
+}
+
+interface IUpdateStepArgument {
+  id?: string;
+  description: string;
+  orderNumber: number;
 }
 
 export default {
@@ -38,7 +52,7 @@ export default {
     args: {
       newRecipe: {
         type: new GraphQLNonNull(RecipeInput),
-        description: "The new recipe name, description, and an array of ingredients with the required quantity"
+        description: "The new recipe name, description, steps and ingredients with the required quantity"
       }
     },
     async resolve(source: any, { newRecipe }: { newRecipe: ICreateRecipeMutationArguments }, context: Context) {
@@ -58,6 +72,17 @@ export default {
             .setQuantity(recipeIngredient.quantity);
 
           await context.services.RecipeIngredientService.create(model);
+        })
+      );
+
+      await Promise.all(
+        newRecipe.steps.map(async (recipeStep: ICreateStepArgument): Promise<void> => {
+          const model = new RecipeStepModel()
+            .setRecipeId(recipe.getId())
+            .setDescription(recipeStep.description)
+            .setOrderNumber(recipeStep.orderNumber);
+
+          await context.services.RecipeStepService.create(model);
         })
       );
 
@@ -99,6 +124,59 @@ export default {
             .setQuantity(recipeIngredient.quantity);
 
           await context.services.RecipeIngredientService.create(model);
+        })
+      );
+
+      const existingSteps = await context.services.RecipeStepService.findByRecipe(recipe.getId());
+
+      const stepChangeSet = updatedRecipe.steps.reduce((acc: any, step: IUpdateStepArgument): Object => {
+        if (step.id == null) {
+          acc.newSteps.push(step);
+          acc.stepIdsToKeep = step.id;
+          return acc;
+        }
+
+        const foundStep = existingSteps.filter((step: RecipeStepModel) => step.getId() == step.id);
+
+        if (foundStep.length == 1) {
+          acc.updatedSteps.push(step);
+          acc.stepIdsToKeep = step.id;
+          return acc;
+        }
+
+        return acc;
+      }, {});
+
+      const removedStepIds = existingSteps
+        .map((step: RecipeStepModel) => step.getId())
+        .filter(stepId => !stepChangeSet.stepIdsToKeep.includes(stepId));
+
+      await Promise.all(
+        stepChangeSet.newSteps.map(async (recipeStep: IUpdateStepArgument): Promise<void> => {
+          const model = new RecipeStepModel()
+            .setRecipeId(recipe.getId())
+            .setDescription(recipeStep.description)
+            .setOrderNumber(recipeStep.orderNumber);
+
+          await context.services.RecipeStepService.create(model);
+        })
+      );
+
+      await Promise.all(
+        stepChangeSet.updatedSteps.map(async (recipeStep: IUpdateStepArgument): Promise<void> => {
+          const model = new RecipeStepModel()
+            .setId(recipeStep.id)
+            .setRecipeId(recipe.getId())
+            .setDescription(recipeStep.description)
+            .setOrderNumber(recipeStep.orderNumber);
+
+          await context.services.RecipeStepService.update(model);
+        })
+      );
+
+      await Promise.all(
+        removedStepIds.map(async (recipeStepId): Promise<void> => {
+          await context.services.RecipeStepService.delete(recipeStepId);
         })
       );
 

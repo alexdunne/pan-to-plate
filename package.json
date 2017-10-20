@@ -8,7 +8,7 @@
   "scripts": {
     "postinstall": "tsc",
     "watch": "tsc -w",
-    "debug": "nodemon --watch ./dist --inspect=0.0.0.0:5858 --nolazy ./dist/index.js",
+    "debug": "nodemon -L ./dist --inspect=0.0.0.0:5858 --nolazy ./dist/index.js",
     "docker-debug": "docker-compose up",
     "db:make-migration": "docker-compose exec web ./node_modules/.bin/knex migrate:make",
     "db:migrate": "docker-compose exec web ./node_modules/.bin/knex migrate:latest",

@@ -1,8 +1,8 @@
 import { GraphQLObjectType, GraphQLNonNull, GraphQLID, GraphQLString, GraphQLList, GraphQLInputObjectType } from "graphql";
 
 import GraphQLISO8601Type from "../../types/GraphQLISO8601Type";
-import { RecipeIngredient } from "../RecipeIngredient/RecipeIngredientSchema";
-import { RecipeIngredientInput } from "../RecipeIngredient/RecipeIngredientSchema";
+import { RecipeIngredient, RecipeIngredientInput } from "../RecipeIngredient/RecipeIngredientSchema";
+import { RecipeStep, RecipeStepInput } from "../RecipeStep/RecipeStepSchema";
 import { Context } from "../../../context";
 
 export const Recipe = new GraphQLObjectType({
@@ -26,6 +26,13 @@ export const Recipe = new GraphQLObjectType({
       description: "The recipe ingredients required for the recipe",
       resolve(parent: any, args: any, context: Context) {
         return context.services.RecipeIngredientService.findByRecipe(parent.id);
+      }
+    },
+    steps: {
+      type: new GraphQLList(RecipeStep),
+      description: "The steps for the recipe",
+      resolve(parent: any, args: any, context: Context) {
+        return context.services.RecipeStepService.findByRecipe(parent.id);
       }
     },
     createdAt: {
@@ -58,6 +65,10 @@ export const RecipeInput = new GraphQLInputObjectType({
     ingredients: {
       type: new GraphQLList(RecipeIngredientInput),
       description: "A list of ingredient ids and their quantities for the recipe"
+    },
+    steps: {
+      type: new GraphQLList(RecipeStepInput),
+      description: "A list of steps for the recipe"
     }
   })
 });
