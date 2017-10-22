@@ -21,6 +21,10 @@ export const Recipe = new GraphQLObjectType({
       type: GraphQLString,
       description: "The description of the recipe"
     },
+    slug: {
+      type: GraphQLString,
+      description: "The unique slug of the recipe"
+    },
     recipeIngredients: {
       type: new GraphQLList(RecipeIngredient),
       description: "The recipe ingredients required for the recipe",

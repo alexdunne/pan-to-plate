@@ -27,6 +27,7 @@ declare module "models" {
         id?: string;
         name?: string;
         description?: string;
+        slug?: string;
         created_at?: Date;
         updated_at?: Date;
         deleted_at?: Date;
@@ -36,6 +37,7 @@ declare module "models" {
         id?: string;
         name?: string;
         description?: string;
+        slug?: string;
         created_at?: Date;
         updated_at?: Date;
         deleted_at?: Date;

@@ -25,6 +25,25 @@ export class DBRecipeRepository implements RecipeRepository {
     return ListUtils.head(results);
   }
 
+  public async findBySlug(slug: string): Promise<models.recipe.DBAttributes> {
+    const results = await this.db
+      .select()
+      .from(Recipes)
+      .where("slug", slug)
+      .andWhere("deleted_at", null);
+
+    return ListUtils.head(results);
+  }
+
+  public async findBySimilarSlug(slug: string): Promise<models.recipe.DBAttributes[]> {
+    return this.db
+      .select()
+      .from(Recipes)
+      .where("slug", slug)
+      .orWhere("slug", "like", `%${slug}%`)
+      .andWhere("deleted_at", null);
+  }
+
   public async create(recipe: models.recipe.DBAttributes): Promise<string> {
     const ids = await this.db
       .insert(recipe)

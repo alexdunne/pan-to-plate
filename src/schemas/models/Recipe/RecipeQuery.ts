@@ -1,4 +1,4 @@
-import { GraphQLNonNull, GraphQLID, GraphQLList } from "graphql";
+import { GraphQLNonNull, GraphQLString, GraphQLList } from "graphql";
 
 import { Recipe } from "./RecipeSchema";
 import { Context } from "../../../context";
@@ -13,13 +13,13 @@ export default {
   recipe: {
     type: Recipe,
     args: {
-      id: {
-        type: new GraphQLNonNull(GraphQLID),
-        description: "The id of the recipe"
+      slug: {
+        type: new GraphQLNonNull(GraphQLString),
+        description: "The slug of the recipe"
       }
     },
-    async resolve(source: any, { id }: { id: string }, context: Context) {
-      return context.services.RecipeService.findById(id);
+    async resolve(source: any, { slug }: { slug: string }, context: Context) {
+      return context.services.RecipeService.findBySlug(slug);
     }
   }
 };

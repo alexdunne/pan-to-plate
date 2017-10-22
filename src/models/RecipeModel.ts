@@ -5,6 +5,7 @@ export class RecipeModel implements Model<models.recipe.JsonAttributes, models.r
   private id?: string;
   private name?: string;
   private description?: string;
+  private slug?: string;
   private createdAt?: Date;
   private updatedAt?: Date;
   private deletedAt?: Date;
@@ -42,6 +43,15 @@ export class RecipeModel implements Model<models.recipe.JsonAttributes, models.r
     return this;
   }
 
+  public getSlug(): string {
+    return this.slug;
+  }
+
+  public setSlug(value: string): RecipeModel {
+    this.slug = value;
+    return this;
+  }
+
   public getCreatedAt(): Date {
     return this.createdAt;
   }
@@ -75,12 +85,13 @@ export class RecipeModel implements Model<models.recipe.JsonAttributes, models.r
 
   /**
    * Merges a new model into the existing model
-   * 
+   *
    * @param model The new model - prefer values from this
    */
   public merge(model: RecipeModel): RecipeModel {
     this.setName(model.getName() || this.getName());
     this.setDescription(model.getDescription() || this.getDescription());
+    this.setSlug(model.getSlug() || this.getSlug());
     this.setCreatedAt(model.getCreatedAt() || this.getCreatedAt());
     this.setUpdatedAt(model.getUpdatedAt() || this.getUpdatedAt());
     this.setDeletedAt(model.getDeletedAt() || this.getDeletedAt());
@@ -106,6 +117,7 @@ export class RecipeModel implements Model<models.recipe.JsonAttributes, models.r
       this.setId(attributes.id);
       this.setName(attributes.name);
       this.setDescription(attributes.description);
+      this.setSlug(attributes.slug);
       this.setCreatedAt(attributes.created_at);
       this.setUpdatedAt(attributes.updated_at);
       this.setDeletedAt(attributes.deleted_at);
@@ -119,6 +131,7 @@ export class RecipeModel implements Model<models.recipe.JsonAttributes, models.r
       this.setId(attributes.id);
       this.setName(attributes.name);
       this.setDescription(attributes.description);
+      this.setSlug(attributes.slug);
       this.setCreatedAt(attributes.created_at);
       this.setUpdatedAt(attributes.updated_at);
       this.setDeletedAt(attributes.deleted_at);
@@ -132,6 +145,7 @@ export class Recipe implements models.recipe.JsonAttributes {
   public id?: string;
   public name?: string;
   public description?: string;
+  public slug?: string;
   public createdAt?: Date;
   public updatedAt?: Date;
   public deletedAt?: Date;
@@ -140,6 +154,7 @@ export class Recipe implements models.recipe.JsonAttributes {
     this.id = model.getId();
     this.name = model.getName();
     this.description = model.getDescription();
+    this.slug = model.getSlug();
     this.createdAt = model.getCreatedAt();
     this.updatedAt = model.getUpdatedAt();
     this.deletedAt = model.getDeletedAt();
@@ -150,6 +165,7 @@ export class DBRecipe implements models.recipe.DBAttributes {
   public id?: string;
   public name?: string;
   public description?: string;
+  public slug?: string;
   public created_at?: Date;
   public updated_at?: Date;
   public deleted_at?: Date;
@@ -158,6 +174,7 @@ export class DBRecipe implements models.recipe.DBAttributes {
     this.id = model.getId();
     this.name = model.getName();
     this.description = model.getDescription();
+    this.slug = model.getSlug();
     this.created_at = model.getCreatedAt();
     this.updated_at = model.getUpdatedAt();
     this.deleted_at = model.getDeletedAt();
