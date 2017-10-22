@@ -2,11 +2,14 @@ require("dotenv").config();
 
 import * as express from "express";
 import { Request, Response } from "express";
+import * as cors from "cors";
 
 import Environment from "./core/Environment";
 import { GraphQLRoutes, Routes } from "./routes";
 
 const app = express();
+
+app.use(cors());
 
 Routes.map(app);
 GraphQLRoutes.map(app);

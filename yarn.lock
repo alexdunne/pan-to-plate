@@ -6,6 +6,12 @@
   version "3.5.11"
   resolved "https://registry.yarnpkg.com/@types/bluebird/-/bluebird-3.5.11.tgz#60482b3cddce9111dee3cafd08ab54fffee4b119"
 
+"@types/cors@^2.8.1":
+  version "2.8.1"
+  resolved "https://registry.yarnpkg.com/@types/cors/-/cors-2.8.1.tgz#54073caf3b7a741e67fb82483f83a6cadfba7501"
+  dependencies:
+    "@types/express" "*"
+
 "@types/express-graphql@^0.0.34":
   version "0.0.34"
   resolved "https://registry.yarnpkg.com/@types/express-graphql/-/express-graphql-0.0.34.tgz#2f56b9a3d65ed8694ce414a02b121aaa16af3baf"
@@ -348,6 +354,13 @@ core-js@^2.4.0:
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
+
+cors@^2.8.4:
+  version "2.8.4"
+  resolved "https://registry.yarnpkg.com/cors/-/cors-2.8.4.tgz#2bd381f2eb201020105cd50ea59da63090694686"
+  dependencies:
+    object-assign "^4"
+    vary "^1"
 
 create-error-class@^3.0.0:
   version "3.0.2"
@@ -1394,7 +1407,7 @@ oauth-sign@~0.8.1:
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/oauth-sign/-/oauth-sign-0.8.2.tgz#46a6ab7f0aead8deae9ec0565780b7d4efeb9d43"
 
-object-assign@^4.1.0:
+object-assign@^4, object-assign@^4.1.0:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
 
@@ -2090,7 +2103,7 @@ v8flags@^2.0.2:
   dependencies:
     user-home "^1.1.1"
 
-vary@~1.1.1:
+vary@^1, vary@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.1.tgz#67535ebb694c1d52257457984665323f587e8d37"
 
